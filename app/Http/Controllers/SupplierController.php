@@ -12,10 +12,22 @@ class SupplierController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $data = Supplier::all();
-        return response()->json($data);
+        if ($request->ajax()) {
+            return datatables()->of($data)
+            ->addColumn('aksi', function($data) {
+                $button = '<button class="edit btn btn-primary btn-sm" id="'.$data->id.'" name="edit"><i class="fas fa-edit"></i></button>';
+                $button .= '<button class="hapus btn btn-danger btn-sm mt-1" id="'.$data->id.'" name="hapus"><i class="fas fa-trash-alt"></i></button>';
+                return $button;
+            })
+            ->rawColumns(['aksi'])
+            ->make(true);
+        }
+
+        return view('owner.SupplierHome');
+
     }
 
     /**
