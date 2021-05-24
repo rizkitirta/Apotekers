@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,10 +23,15 @@ Route::get('logout', function () {
     Auth::logout();
     return redirect('/');
 })->name('logout');
+
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth'])->name('dashboard');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+Route::group(['middleware' => ['role:owner']], function() {
+    Route::resource('supplier', SupplierController::class);
+});
+
+require __DIR__ . '/auth.php';

@@ -11,6 +11,8 @@
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/fontawesome-free/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/datatables/datatables.css') }}">
+    <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('AdminLTE/dist/css/adminlte.min.css') }}">
 </head>
@@ -228,6 +230,12 @@
                                     <a href="../layout/boxed.html" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Data Penjualan</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('supplier.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Data Supplier</p>
                                     </a>
                                 </li>
                             </ul>
@@ -463,6 +471,7 @@
     <script src="{{ asset('AdminLTE/dist/js/adminlte.min.js') }}"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="{{ asset('AdminLTE/dist/js/demo.js') }}"></script>
+    @stack('js');
 </body>
 
 </html>
