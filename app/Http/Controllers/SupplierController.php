@@ -18,7 +18,7 @@ class SupplierController extends Controller
         if ($request->ajax()) {
             return datatables()->of($data)
             ->addColumn('aksi', function($data) {
-                $button = '<button class="edit btn btn-primary btn-sm" id="'.$data->id.'" name="edit"><i class="fas fa-edit"></i></button>';
+                $button = '<button class="edit btn btn-primary btn-sm" id="'.$data->id.'" name="edit" ><i class="fas fa-edit"></i></button>';
                 $button .= '<button class="hapus btn btn-danger btn-sm mt-1" id="'.$data->id.'" name="hapus"><i class="fas fa-trash-alt"></i></button>';
                 return $button;
             })
@@ -48,7 +48,20 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama' => 'required|string',
+            'telp' => 'required|string',
+            'email' => 'required|email',
+            'rekening' => 'required|string',
+            'alamat' => 'required',
+        ]);
+
+        $supplier = Supplier::create($request->all());
+        if ($supplier) {
+            return response()->json(['message' => 'Data Berhasil Disimpan'], 200);
+        }else {
+            return response()->json(['message' => 'Data Gagal Disimpan'], 400);
+        }
     }
 
     /**
@@ -68,9 +81,10 @@ class SupplierController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+        $data = Supplier::find($request->id);
+        return response()->json($data);
     }
 
     /**
@@ -80,9 +94,23 @@ class SupplierController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            'nama' => 'required|string',
+            'telp' => 'required|string',
+            'email' => 'required|email',
+            'rekening' => 'required|string',
+            'alamat' => 'required',
+        ]);
+
+        $data = Supplier::find($request->id);
+        $data->update($request->all());
+        if ($data) {
+            return response()->json(['message' => 'Data Berhasil Diupdate']);
+        }else {
+            return response()->json(['message' => 'Data Gagal Diupdate']);
+        }
     }
 
     /**
@@ -91,8 +119,14 @@ class SupplierController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function hapus(Request $request)
     {
-        //
+        $data = Supplier::find($request->id);
+        $data->delete($data);
+        if ($data) {
+            return response()->json(['message' => 'Data Berhasil Dihapus']);
+        }else {
+            return response()->json(['message' => 'Data Gagal Dihapus']);
+        }
     }
 }
