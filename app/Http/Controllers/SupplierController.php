@@ -17,17 +17,16 @@ class SupplierController extends Controller
         $data = Supplier::all();
         if ($request->ajax()) {
             return datatables()->of($data)
-            ->addColumn('aksi', function($data) {
-                $button = '<button class="edit btn btn-primary btn-sm" id="'.$data->id.'" name="edit" ><i class="fas fa-edit"></i></button>';
-                $button .= '<button class="hapus btn btn-danger btn-sm mt-1" id="'.$data->id.'" name="hapus"><i class="fas fa-trash-alt"></i></button>';
-                return $button;
-            })
-            ->rawColumns(['aksi'])
-            ->make(true);
+                ->addColumn('aksi', function ($data) {
+                    $button = '<button class="edit btn btn-primary btn-sm" id="' . $data->id . '" name="edit" ><i class="fas fa-edit"></i></button>';
+                    $button .= '<button class="hapus btn btn-danger btn-sm mt-1" id="' . $data->id . '" name="hapus"><i class="fas fa-trash-alt"></i></button>';
+                    return $button;
+                })
+                ->rawColumns(['aksi'])
+                ->make(true);
         }
 
         return view('owner.SupplierHome');
-
     }
 
     /**
@@ -59,7 +58,7 @@ class SupplierController extends Controller
         $supplier = Supplier::create($request->all());
         if ($supplier) {
             return response()->json(['message' => 'Data Berhasil Disimpan'], 200);
-        }else {
+        } else {
             return response()->json(['message' => 'Data Gagal Disimpan'], 400);
         }
     }
@@ -108,7 +107,7 @@ class SupplierController extends Controller
         $data->update($request->all());
         if ($data) {
             return response()->json(['message' => 'Data Berhasil Diupdate']);
-        }else {
+        } else {
             return response()->json(['message' => 'Data Gagal Diupdate']);
         }
     }
@@ -125,7 +124,7 @@ class SupplierController extends Controller
         $data->delete($data);
         if ($data) {
             return response()->json(['message' => 'Data Berhasil Dihapus']);
-        }else {
+        } else {
             return response()->json(['message' => 'Data Gagal Dihapus']);
         }
     }

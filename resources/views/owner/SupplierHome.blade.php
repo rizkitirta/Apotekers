@@ -8,78 +8,76 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <button type="button" class="btn btn-primary float-right mb-2" data-toggle="modal"
-                        data-target="#modal-default" id="btn-tambah">
-                        Insert Supplier
-                    </button>
-                    <table class="table table-striped bordered " id="datatable">
-                        <thead class="thead-light">
-                            <tr>
-                                <th>Nama</th>
-                                <th>Telpon</th>
-                                <th>Email</th>
-                                <th>Rekening</th>
-                                <th>Alamat</th>
-                                <th>Aksi</th>
-                            </tr>
-                    </table>
+                <button type="button" class="btn btn-primary float-right mb-2" data-toggle="modal"
+                    data-target="#modal-default" id="btn-tambah">
+                    Insert Supplier
+                </button>
+                <table class="table table-striped bordered " id="datatable">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Nama</th>
+                            <th>Telpon</th>
+                            <th>Email</th>
+                            <th>Rekening</th>
+                            <th>Alamat</th>
+                            <th>Aksi</th>
+                        </tr>
+                </table>
 
-                    <div class="modal fade" id="modal-default">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Tambah Supplier</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <!-- form start -->
-                                    <form action="{{ route('supplier.store') }}" method="POST" id="form">
-                                        @csrf
-                                        <div class="card-body">
-                                            <input type="hidden" value="" name="id" id="id">
-                                            <div class="form-group">
-                                                <label for="nama">Nama Supplier</label>
-                                                <input type="text" class="form-control" id="nama"
-                                                    placeholder="Enter Name" name="nama">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="telp">No Telpon</label>
-                                                <input type="text" class="form-control" id="telp"
-                                                    placeholder="Enter Telp" name="telp"
-                                                    onkeypress="return number(event)">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="email">Email address</label>
-                                                <input type="email" class="form-control" id="email"
-                                                    placeholder="Enter email" name="email">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="rekening">No Rekening</label>
-                                                <input type="text" class="form-control" id="rekening"
-                                                    placeholder="Password" name="rekening"
-                                                    onkeypress="return number(event)">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="alamat">Alamat</label>
-                                                <textarea class="form-control" name="alamat" id="alamat" cols="30"
-                                                    rows="2"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer justify-content-between">
-                                            <button type="button" id="btn-tutup" class="btn btn-default"
-                                                data-dismiss="modal">Close</button>
-                                            <button type="submit" id="btn-simpan" class="btn btn-primary">Save</button>
-                                        </div>
-                                    </form>
-                                </div>
+                <div class="modal fade" id="modal-default">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Tambah Supplier</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
-                            <!-- /.modal-content -->
+                            <div class="modal-body">
+                                <!-- form start -->
+                                <form action="{{ route('supplier.store') }}" method="POST" id="form">
+                                    @csrf
+                                    <div class="card-body">
+                                        <input type="hidden" value="" name="id" id="id">
+                                        <div class="form-group">
+                                            <label for="nama">Nama Supplier</label>
+                                            <input type="text" class="form-control" id="nama" placeholder="Enter Name"
+                                                name="nama">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="telp">No Telpon</label>
+                                            <input type="text" class="form-control" id="telp" placeholder="Enter Telp"
+                                                name="telp" onkeypress="return number(event)">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Email address</label>
+                                            <input type="email" class="form-control" id="email"
+                                                placeholder="Enter email" name="email">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="rekening">No Rekening</label>
+                                            <input type="text" class="form-control" id="rekening" placeholder="Password"
+                                                name="rekening" onkeypress="return number(event)">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="alamat">Alamat</label>
+                                            <textarea class="form-control" name="alamat" id="alamat" cols="30"
+                                                rows="2"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer justify-content-between">
+                                        <button type="button" id="btn-tutup" class="btn btn-default"
+                                            data-dismiss="modal">Close</button>
+                                        <button type="submit" id="btn-simpan" class="btn btn-primary">Save</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                        <!-- /.modal-dialog -->
+                        <!-- /.modal-content -->
                     </div>
-                    <!-- /.modal -->
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
             </div>
         </div>
     </div>
@@ -147,9 +145,19 @@
                 console.log(res)
                 $('#btn-tutup').click()
                 $('#datatable').DataTable().ajax.reload()
+                Swal.fire({
+                    icon: 'success',
+                    title: res.message,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
             },
             error: function(xhr) {
-                console.log(xhr)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: xhr.responseJSON.message,
+                })
             }
         })
     })
@@ -183,25 +191,41 @@
     })
 
     $(document).on('click', '.hapus', function() {
-        confirm('apakah anda yakin?')
-        let id = $(this).attr('id')
-        $.ajax({
-            url: "{{ route('supplier.hapus') }}",
-            type: 'POST',
-            data: {
-                id: id,
-                _token: "{{ csrf_token() }}"
-            },
-            success: function(res) {
-                console.log(res);
-                $('#datatable').DataTable().ajax.reload()
-                alert(res.message)
-            },
-            error: function(xhr) {
-                console.log(xhr);
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let id = $(this).attr('id')
+                $.ajax({
+                    url: "{{ route('supplier.hapus') }}",
+                    type: 'POST',
+                    data: {
+                        id: id,
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success: function(res) {
+                        console.log(res);
+                        $('#datatable').DataTable().ajax.reload()
+                    },
+                    error: function(xhr) {
+                        console.log(xhr);
 
+                    }
+                })
+                Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                )
             }
         })
+
     })
 
 </script>
