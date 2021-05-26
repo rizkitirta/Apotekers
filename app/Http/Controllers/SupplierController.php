@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class SupplierController extends Controller
 {
@@ -47,19 +48,32 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $rules = [
             'nama' => 'required|string',
             'telp' => 'required|string',
             'email' => 'required|email',
             'rekening' => 'required|string',
             'alamat' => 'required',
-        ]);
+        ];
+
+        $message = [
+            'nama.required' => 'Kolom nama tidak boleh kosong!',
+            'telp.required' => 'Kolom telpon tidak boleh kosong!',
+            'email.required' => 'Kolom email tidak boleh kosong!',
+            'rekening.required' => 'Kolom rekening ridak boleh kosong!',
+            'alamat.required' => 'Kolom Alamat tidak boleh kosong!',
+        ];
+
+        $validasi = Validator::make($request->all(), $rules, $message);
+        if ($validasi->fails()) {
+            return response()->json(['message' => $validasi->errors()->first()], 422);
+        }
 
         $supplier = Supplier::create($request->all());
         if ($supplier) {
             return response()->json(['message' => 'Data Berhasil Disimpan'], 200);
         } else {
-            return response()->json(['message' => 'Data Gagal Disimpan'], 400);
+            return response()->json(['message' => 'Data Gagal Disimpan'], 422);
         }
     }
 

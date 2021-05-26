@@ -41,28 +41,29 @@
                                         <input type="hidden" value="" name="id" id="id">
                                         <div class="form-group">
                                             <label for="nama">Nama Supplier</label>
-                                            <input type="text" class="form-control" id="nama" placeholder="Enter Name"
-                                                name="nama">
+                                            <input autocomplete="off" type="text" class="form-control" id="nama"
+                                                placeholder="Enter Name" name="nama">
                                         </div>
                                         <div class="form-group">
                                             <label for="telp">No Telpon</label>
-                                            <input type="text" class="form-control" id="telp" placeholder="Enter Telp"
-                                                name="telp" onkeypress="return number(event)">
+                                            <input autocomplete="off" type="text" class="form-control" id="telp"
+                                                placeholder="Enter Telp" name="telp" onkeypress="return number(event)">
                                         </div>
                                         <div class="form-group">
                                             <label for="email">Email address</label>
-                                            <input type="email" class="form-control" id="email"
+                                            <input autocomplete="off" type="email" class="form-control" id="email"
                                                 placeholder="Enter email" name="email">
                                         </div>
                                         <div class="form-group">
                                             <label for="rekening">No Rekening</label>
-                                            <input type="text" class="form-control" id="rekening" placeholder="Password"
-                                                name="rekening" onkeypress="return number(event)">
+                                            <input autocomplete="off" type="text" class="form-control" id="rekening"
+                                                placeholder="Password" name="rekening"
+                                                onkeypress="return number(event)">
                                         </div>
                                         <div class="form-group">
                                             <label for="alamat">Alamat</label>
-                                            <textarea class="form-control" name="alamat" id="alamat" cols="30"
-                                                rows="2"></textarea>
+                                            <textarea autocomplete="off" class="form-control" name="alamat" id="alamat"
+                                                cols="30" rows="2"></textarea>
                                         </div>
                                     </div>
                                     <div class="modal-footer justify-content-between">
@@ -87,6 +88,10 @@
 <script>
     $(document).ready(function() {
         loadData()
+
+        $('#btn-tambah').on('click', function() {
+            $("#form").trigger('reset');
+        });
     })
 
     function loadData() {
@@ -153,10 +158,10 @@
                 })
             },
             error: function(xhr) {
+                console.log(xhr);
                 Swal.fire({
                     icon: 'error',
-                    title: 'Oops...',
-                    text: xhr.responseJSON.message,
+                    title: xhr.responseJSON.message,
                 })
             }
         })
@@ -186,6 +191,10 @@
             },
             error: function(xhr) {
                 console.log(xhr);
+                Swal.fire({
+                    icon: 'error',
+                    title: xhr.responseJSON.message,
+                })
             }
         })
     })
