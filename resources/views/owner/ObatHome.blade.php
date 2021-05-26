@@ -10,16 +10,17 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <button type="button" class="btn btn-primary float-right mb-2" data-toggle="modal"
                     data-target="#modal-default" id="btn-tambah">
-                    Insert Supplier
+                    Tambah Obat
                 </button>
                 <table class="table table-striped bordered " id="datatable">
                     <thead class="thead-light">
                         <tr>
                             <th>Nama</th>
-                            <th>Telpon</th>
-                            <th>Email</th>
-                            <th>Rekening</th>
-                            <th>Alamat</th>
+                            <th>Kode</th>
+                            <th>Dosis</th>
+                            <th>Indikasi</th>
+                            <th>Kategori</th>
+                            <th>Satuan</th>
                             <th>Aksi</th>
                         </tr>
                 </table>
@@ -28,48 +29,63 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4 class="modal-title">Tambah Supplier</h4>
+                                <h4 class="modal-title">Tambah Obat</h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
                                 <!-- form start -->
-                                <form action="{{ route('supplier.store') }}" method="POST" id="form">
+                                <form action="{{ route('obat.store') }}" method="POST" id="form">
                                     @csrf
                                     <div class="card-body">
                                         <input type="hidden" value="" name="id" id="id">
                                         <div class="row">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="nama">Nama Supplier</label>
+                                                    <label for="nama">Nama Obat</label>
                                                     <input autocomplete="off" type="text" class="form-control" id="nama"
                                                         placeholder="Enter Name" name="nama">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="telp">No Telpon</label>
-                                                    <input autocomplete="off" type="text" class="form-control" id="telp"
-                                                        placeholder="Enter Telp" name="telp"
+                                                    <label for="kode">Kode</label>
+                                                    <input autocomplete="off" type="text" class="form-control" id="kode"
+                                                        placeholder="Enter Kode" name="kode"
                                                         onkeypress="return number(event)">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="rekening">No Rekening</label>
+                                                    <label for="dosis">Dosis</label>
                                                     <input autocomplete="off" type="text" class="form-control"
-                                                        id="rekening" placeholder="Enter rekening" name="rekening"
-                                                        onkeypress="return number(event)">
+                                                        id="dosis" placeholder="Enter dosis" name="dosis">
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="email">Email address</label>
-                                                    <input autocomplete="off" type="email" class="form-control"
-                                                        id="email" placeholder="Enter email" name="email">
+                                                    <label for="indikasi">Indikasi</label>
+                                                    <input autocomplete="off" type="text" class="form-control"
+                                                        id="indikasi" placeholder="Enter indikasi" name="indikasi">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="alamat">Alamat</label>
-                                                    <textarea autocomplete="off" class="form-control" name="alamat"
-                                                        id="alamat" cols="30" rows="5"></textarea>
+                                                    <label for="kategori_id">Kategori</label>
+                                                    <select name="kategori_id" id="kategori_id" class="form-control">
+                                                        <option value="">Pilih Kategori</option>
+                                                        @foreach ($kategori as $item)
+                                                            <option value="{{ $item->id }}">{{ $item->kategori }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
+                                                <div class="form-group">
+                                                    <label for="satuan_id">Satuan</label>
+                                                    <select name="satuan_id" id="satuan_id" class="form-control">
+                                                        <option value="">Pilih Satuan</option>
+                                                        @foreach ($satuan as $item)
+                                                            <option value="{{ $item->id }}">{{ $item->satuan }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -106,27 +122,31 @@
             serverSide: true,
             processing: true,
             ajax: {
-                url: "{{ route('supplier.index') }}"
+                url: "{{ route('obat.index') }}"
             },
             columns: [{
                     data: 'nama',
                     name: 'nama'
                 },
                 {
-                    data: 'telp',
-                    name: 'telp'
+                    data: 'kode',
+                    name: 'kode'
                 },
                 {
-                    data: 'email',
-                    name: 'email'
+                    data: 'dosis',
+                    name: 'dosis'
                 },
                 {
-                    data: 'rekening',
-                    name: 'rekening'
+                    data: 'indikasi',
+                    name: 'indikasi'
                 },
                 {
-                    data: 'alamat',
-                    name: 'alamat'
+                    data: 'kategoris',
+                    name: 'kategoris'
+                },
+                {
+                    data: 'satuans',
+                    name: 'satuans'
                 },
                 {
                     data: 'aksi',
@@ -137,12 +157,6 @@
         })
     }
 
-    function number(evt) {
-        var charCode = (evt.which) ? evt.which : event.keyCode
-        if (charCode > 31 && (charCode < 48 || charCode > 57))
-            return false;
-        return true;
-    }
 
     $(document).on('submit', 'form', function(event) {
         event.preventDefault();
@@ -176,10 +190,10 @@
 
     $(document).on('click', '.edit', function() {
         $('#modal-default').modal()
-        $('#form').attr('action', "{{ route('supplier.update') }}")
+        $('#form').attr('action', "{{ route('obat.update') }}")
         let id = $(this).attr('id')
         $.ajax({
-            url: "{{ route('supplier.edit') }}",
+            url: "{{ route('obat.edit') }}",
             type: 'POST',
             data: {
                 id: id,
@@ -189,10 +203,11 @@
                 console.log(res);
                 $('#id').val(res.id)
                 $('#nama').val(res.nama)
-                $('#telp').val(res.telp)
-                $('#email').val(res.email)
-                $('#rekening').val(res.rekening)
-                $('#alamat').val(res.alamat)
+                $('#kode').val(res.kode)
+                $('#dosis').val(res.dosis)
+                $('#indikasi').val(res.indikasi)
+                $('#kategori_id').val(res.kategori_id)
+                $('#satuan_id').val(res.satuan_id)
                 $('#btn-tutup').click()
                 $('#datatable').DataTable().ajax.reload()
             },
@@ -208,8 +223,8 @@
 
     $(document).on('click', '.hapus', function() {
         Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            title: 'Apakah Anda Yakin?',
+            text: "Data Akan Dihapus Permanen!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -219,7 +234,7 @@
             if (result.isConfirmed) {
                 let id = $(this).attr('id')
                 $.ajax({
-                    url: "{{ route('supplier.hapus') }}",
+                    url: "{{ route('obat.hapus') }}",
                     type: 'POST',
                     data: {
                         id: id,

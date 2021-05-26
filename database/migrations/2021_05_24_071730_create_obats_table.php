@@ -20,9 +20,9 @@ class CreateObatsTable extends Migration
             $table->string('dosis', 55);
             $table->string('indikasi', 55);
             $table->unsignedBigInteger('kategori_id');
-            $table->foreign('kategori')->references('id')->on('kategoris')->onDelete('cascade');
+            $table->foreign('kategori_id')->references('id')->on('kategoris')->onDelete('cascade');
             $table->unsignedBigInteger('satuan_id');
-            $table->foreign('satuan')->references('id')->on('satuans')->onDelete('cascade');
+            $table->foreign('satuan_id')->references('id')->on('satuans')->onDelete('cascade');
             $table->timestamps();
         });
     }
