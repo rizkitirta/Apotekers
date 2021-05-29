@@ -96,8 +96,14 @@
     $(document).ready(function() {
         loadData()
 
-        $('#btn-tambah').on('click', function() {
-            $("#form").trigger('reset');
+        $('#btn-tambah').click(function() {
+            $('#form').attr('action', "{{ route('supplier.store') }}")
+            $('#id').val('')
+            $('#nama').val('')
+            $('#telp').val('')
+            $('#email').val('')
+            $('#rekening').val('')
+            $('#alamat').val('')
         });
     })
 

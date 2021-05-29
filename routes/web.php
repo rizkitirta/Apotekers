@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ObatController;
+use App\Http\Controllers\StockObatController;
 use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
 
@@ -46,6 +47,14 @@ Route::group(['middleware' => ['role:owner']], function () {
     Route::post('obat/edit', [ObatController::class, 'edit'])->name('obat.edit');
     Route::post('obat/update', [ObatController::class, 'update'])->name('obat.update');
     Route::post('obat/hapus', [ObatController::class, 'hapus'])->name('obat.hapus');
+
+    //Router Stock Obat
+    Route::get('stock-obat/index', [StockObatController::class, 'index'])->name('stock-obat.index');
+    Route::post('stock-obat/getObat', [StockObatController::class, 'getObat'])->name('stock-obat.getObat');
+    Route::post('stock-obat/store', [StockObatController::class, 'store'])->name('stock-obat.store');
+    Route::post('stock-obat/edit', [StockObatController::class, 'edit'])->name('stock-obat.edit');
+    Route::post('stock-obat/update', [StockObatController::class, 'update'])->name('stock-obat.update');
+    Route::post('stock-obat/delete', [StockObatController::class, 'hapus'])->name('stock-obat.hapus');
 });
 
 require __DIR__ . '/auth.php';

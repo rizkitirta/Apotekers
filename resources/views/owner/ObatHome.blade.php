@@ -39,7 +39,7 @@
                                 <form action="{{ route('obat.store') }}" method="POST" id="form">
                                     @csrf
                                     <div class="card-body">
-                                        <input type="hidden" value="" name="id" id="id">
+                                        <input type="hidden" name="id" id="id">
                                         <div class="row">
                                             <div class="col">
                                                 <div class="form-group">
@@ -112,9 +112,17 @@
     $(document).ready(function() {
         loadData()
 
-        $('#btn-tambah').on('click', function() {
-            $("#form").trigger('reset');
+        $('#btn-tambah').click(function() {
+            $('#form').attr('action', "{{ route('obat.store') }}")
+            $('#id').val('')
+            $('#nama').val('')
+            $('#kode').val('')
+            $('#dosis').val('')
+            $('#indikasi').val('')
+            $('#kategori_id').val('')
+            $('#satuan_id').val('')
         });
+
     })
 
     function loadData() {
@@ -260,3 +268,7 @@
     })
 
 </script>
+
+
+
+

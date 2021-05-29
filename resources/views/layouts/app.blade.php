@@ -222,6 +222,12 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
+                                    <a href="{{ route('stock-obat.index') }}" class="nav-link">
+                                        <i class="fas fa-tags nav-icon"></i>
+                                        <p>Stock Obat</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a href="../layout/top-nav-sidebar.html" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Data Pengeluaran</p>
