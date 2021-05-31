@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ObatController;
-use App\Http\Controllers\PenjulanController;
+use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\StockObatController;
 use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
@@ -58,12 +58,12 @@ Route::group(['middleware' => ['role:owner']], function () {
     Route::post('stock-obat/delete', [StockObatController::class, 'hapus'])->name('stock-obat.hapus');
 
     //Route Penjualan Barang
-    Route::get('penjualan/index', [PenjulanController::class, 'index'])->name('penjualan.index');
-    Route::post('penjualan/getObat', [PenjulanController::class, 'getObat'])->name('penjualan.getObat');
-    Route::post('penjualan/store', [PenjulanController::class, 'store'])->name('penjualan.store');
-    Route::post('penjualan/edit', [PenjulanController::class, 'edit'])->name('penjualan.edit');
-    Route::post('penjualan/update', [PenjulanController::class, 'update'])->name('penjualan.update');
-    Route::post('penjualan/delete', [PenjulanController::class, 'hapus'])->name('penjualan.hapus');
+    Route::get('penjualan/index', [PenjualanController::class, 'index'])->name('penjualan.index');
+    Route::post('penjualan/getObat', [PenjualanController::class, 'getObat'])->name('penjualan.getObat');
+    Route::post('penjualan/store', [PenjualanController::class, 'store'])->name('penjualan.store');
+    Route::post('penjualan/edit', [PenjualanController::class, 'edit'])->name('penjualan.edit');
+    Route::post('penjualan/update', [PenjualanController::class, 'update'])->name('penjualan.update');
+    Route::post('penjualan/delete', [PenjualanController::class, 'hapus'])->name('penjualan.hapus');
 
 
 });

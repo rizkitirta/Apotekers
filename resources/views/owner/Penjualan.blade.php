@@ -65,80 +65,78 @@
                                 <h3 class="card-title">Data Pembelian</h3>
                             </div>
                             <!-- form start pembelian -->
-                                <input type="hidden" value="" name="id" id="id">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label for="obat_id">Nama Obat</label>
-                                                <select id="obat_id" class="form-control" name="obat_id">
-                                                    <option>Pilih Obat</option>
-                                                    @foreach ($obat as $item)
-                                                        <option value="{{ $item->id }}">{{ $item->namaObat }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
+                            <input type="hidden" value="" name="id" id="id">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="obat_id">Nama Obat</label>
+                                            <select id="obat_id" class="form-control" name="obat_id">
+                                                <option>Pilih Obat</option>
+                                                @foreach ($obat as $item)
+                                                    <option value="{{ $item->obatId }}">{{ $item->namaObat }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
 
-                                        </div>
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label for="stock">Stock Tersedia</label>
-                                                <input autocomplete="off" type="text" class="form-control" id="stock"
-                                                    name="stock" onkeypress="return number(event)" value="0">
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label for="kwintansi">No Kwintansi</label>
-                                                <input autocomplete="off" type="text" class="form-control"
-                                                    id="kwintansi" name="kwintansi" onkeypress="return number(event)"
-                                                    value="0">
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label for="tanggal">Tanggal</label>
-                                                <input autocomplete="off" type="text" class="form-control" id="tanggal"
-                                                    name="tanggal" value="0" onkeypress="return number(event)">
-                                            </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="stock">Stock Tersedia</label>
+                                            <input autocomplete="off" type="text" class="form-control" id="stock"
+                                                name="stock" onkeypress="return number(event)" value="0">
                                         </div>
                                     </div>
-
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label for="qty">Jumlah Pembelian</label>
-                                                <input autocomplete="off" type="number" class="form-control" id="qty"
-                                                name="qty" onkeypress="return number(event)" value="0">
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label for="harga">Harga @satuan</label>
-                                                <input autocomplete="off" type="text" class="form-control" id="harga"
-                                                    name="harga" onkeypress="return number(event)" value="0">
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label for="diskon">Diskon</label>
-                                                <input autocomplete="off" type="text" class="form-control" id="diskon"
-                                                    name="diskon" onkeypress="return number(event)" value="0">
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="form-group">
-                                                <label for="total_harga">Total Harga</label>
-                                                <input autocomplete="off" type="text" class="form-control"
-                                                    id="total_harga" name="total_harga" value="0"
-                                                    onkeypress="return number(event)">
-                                            </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="kwintansi">No Kwintansi</label>
+                                            <input autocomplete="off" type="text" class="form-control" id="kwintansi"
+                                                name="kwintansi" value="0">
                                         </div>
                                     </div>
-                                    <button type="submit" id="btn-simpan" class="btn btn-success">Save</button>
-                                    <button type="submit" id="btn-tambahObat" class="btn btn-primary">Tambah
-                                        Obat</button>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="tanggal">Tanggal</label>
+                                            <input autocomplete="off" type="date" class="form-control" id="tanggal"
+                                                name="tanggal" value="0" >
+                                        </div>
+                                    </div>
                                 </div>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="qty">Jumlah Pembelian</label>
+                                            <input autocomplete="off" type="number" class="form-control" id="qty"
+                                                name="qty" onkeypress="return number(event)" value="0">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="harga">Harga @satuan</label>
+                                            <input autocomplete="off" type="text" class="form-control" id="harga"
+                                                name="harga" onkeypress="return number(event)" value="0">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="diskon">Diskon</label>
+                                            <input autocomplete="off" type="text" class="form-control" id="diskon"
+                                                name="diskon" onkeypress="return number(event)" value="0">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label for="total_harga">Total Harga</label>
+                                            <input autocomplete="off" type="text" class="form-control" id="total_harga"
+                                                name="total_harga" value="0" onkeypress="return number(event)">
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" id="btn-simpan" class="btn btn-success">Save</button>
+                                <button type="submit" id="btn-tambahObat" class="btn btn-primary">Tambah
+                                    Obat</button>
+                            </div>
                             </form>
                             <div class="card-body shadow">
                                 <table class="table table-striped bordered " id="datatable">
@@ -201,6 +199,9 @@
             $('#total_harga').val(qty * harga)
         })
 
+        //Live Update inputan Stock
+
+
 
         //Function Store
         $('#form').on('submit', function() {
@@ -241,11 +242,14 @@
             serverSide: true,
             processing: true,
             ajax: {
-                url: "{{ route('penjualan.index') }}"
+                url: "{{ route('penjualan.index') }}",
+                data: {
+                    id : $('#kwintansi').val()
+                }
             },
             columns: [{
-                    data: 'namaObat',
-                    name: 'namaObat'
+                    data: 'nama_obat',
+                    name: 'nama_obat'
                 },
                 {
                     data: 'qty',
@@ -256,8 +260,8 @@
                     name: 'harga'
                 },
                 {
-                    data: 'totalHarga',
-                    name: 'totalHarga'
+                    data: 'subTotal',
+                    name: 'subTotal'
                 },
                 {
                     data: 'aksi',
