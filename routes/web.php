@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ObatController;
+use App\Http\Controllers\PenjulanController;
 use App\Http\Controllers\StockObatController;
 use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
@@ -55,6 +56,16 @@ Route::group(['middleware' => ['role:owner']], function () {
     Route::post('stock-obat/edit', [StockObatController::class, 'edit'])->name('stock-obat.edit');
     Route::post('stock-obat/update', [StockObatController::class, 'update'])->name('stock-obat.update');
     Route::post('stock-obat/delete', [StockObatController::class, 'hapus'])->name('stock-obat.hapus');
+
+    //Route Penjualan Barang
+    Route::get('penjualan/index', [PenjulanController::class, 'index'])->name('penjualan.index');
+    Route::post('penjualan/getObat', [PenjulanController::class, 'getObat'])->name('penjualan.getObat');
+    Route::post('penjualan/store', [PenjulanController::class, 'store'])->name('penjualan.store');
+    Route::post('penjualan/edit', [PenjulanController::class, 'edit'])->name('penjualan.edit');
+    Route::post('penjualan/update', [PenjulanController::class, 'update'])->name('penjualan.update');
+    Route::post('penjualan/delete', [PenjulanController::class, 'hapus'])->name('penjualan.hapus');
+
+
 });
 
 require __DIR__ . '/auth.php';

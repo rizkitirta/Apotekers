@@ -234,7 +234,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="../layout/boxed.html" class="nav-link">
+                                    <a href="" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Data Penjualan</p>
                                     </a>
@@ -258,7 +258,7 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="../layout/top-nav.html" class="nav-link">
+                                    <a href="{{ route('penjualan.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Penjualan Barang</p>
                                     </a>
