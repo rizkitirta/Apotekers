@@ -16,6 +16,8 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('AdminLTE/dist/css/adminlte.min.css') }}">
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Select2 -->
+  <link rel="stylesheet" href="{{ asset('AdminLTE/plugins/select2/css/select2.min.css') }}">
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -478,6 +480,7 @@
     <script src="{{ asset('AdminLTE/dist/js/adminlte.min.js') }}"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="{{ asset('AdminLTE/dist/js/demo.js') }}"></script>
+
     @stack('js');
 </body>
 

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Pasien;
 use App\Models\Penjualan;
 use App\Models\StockObat;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -16,11 +18,34 @@ class PenjualanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
         $obat = StockObat::join()->get();
+        $tanggal = Carbon::now()->format('Y-m-d');
+        $now = Carbon::now();
+        $thn_bulan = $now->year . $now->month;
+        $cek_number = Penjualan::count();
+        if ($cek_number == 0) {
+            $no_urut = 1001;
+            $number = 'NT' . $thn_bulan . $no_urut;
+            //dd($number);
+        } else {
+            $get =  Penjualan::all()->last();
+            $no_urut = (int)substr($get->kwitansi, -4) + 1;
+            $number = 'NT' . $thn_bulan . $no_urut;
+        }
+
+        //NT202141001
+        return view('owner.Penjualan', compact('obat', 'tanggal', 'number'));
+    }
+
+    public function dataTable(Request $request)
+    {
         $kwitansi = $request->id;
-        $data = Penjualan::where('kwitansi', $kwitansi)->get();
+        $data = DB::table('penjualans')->where('kwitansi', $kwitansi)
+            ->join('obats', 'penjualans.item_id', 'obats.id')
+            ->select('penjualans.*', 'obats.nama')
+            ->latest();
         if ($request->ajax()) {
             return datatables()->of($data)
                 ->addColumn('aksi', function ($data) {
@@ -31,14 +56,12 @@ class PenjualanController extends Controller
                 ->rawColumns(['aksi'])
                 ->make(true);
         }
-
-        return view('owner.Penjualan', compact('obat','data'));
     }
 
 
     public function getObat(Request $request)
     {
-        $data = StockObat::where('obat_id',$request->id)->first();
+        $data = StockObat::where('obat_id', $request->id)->first();
         $null = [
             'stock' => 0
         ];
@@ -73,7 +96,7 @@ class PenjualanController extends Controller
             'telp' => 'required',
             'alamat' => 'required',
             'obat_id' => 'required',
-            'kwintansi' => 'required',
+            'kwitansi' => 'required',
             'qty' => 'required',
             'total_harga' => 'required',
         ];
@@ -83,7 +106,7 @@ class PenjualanController extends Controller
             'telp.required' => 'Kolom Telpon Tidak Boleh Kosong!',
             'alamat.required' => 'Kolom alamat Tidak Boleh Kosong!',
             'obat_id.required' => 'Kolom obat Tidak Boleh Kosong!',
-            'kwintasi.required' => 'Kolom  kwintasi Tidak Boleh Kosong!',
+            'kwitansi.required' => 'Kolom  kwitansi Tidak Boleh Kosong!',
             'qty.required' => 'Kolom qty Tidak Boleh Kosong!',
             'total_harga.required' => 'Kolom Total harga Tidak Boleh Kosong!',
         ];
@@ -106,10 +129,10 @@ class PenjualanController extends Controller
         $pasien_id = $consumer->id;
 
         $penjualan = [
-            'kwitansi' => $request->kwintansi,
+            'kwitansi' => $request->kwitansi,
             'tanggal' =>  date('Y-m-d'),
             'qty' => $request->qty,
-            'harga' => $request->qty,
+            'harga' => $request->harga,
             'diskon' => $request->diskon,
             'sub_total' => $request->total_harga,
             'item_id' => $request->obat_id,
@@ -122,12 +145,12 @@ class PenjualanController extends Controller
             $stock = StockObat::where('obat_id', $request->obat_id)->first();
             $stock_old = $stock->stock;
             $stock_now = $stock_old - $request->qty;
+            $stock->update(['stock' => $stock_now]);
 
-            return response()->json(['message' => 'Transaksi Berhasil!'],200);
-        }else{
-            return response()->json(['message' => 'Transaksi Gagal!'],200);
+            return response()->json(['message' => 'Transaksi Berhasil!'], 200);
+        } else {
+            return response()->json(['message' => 'Transaksi Gagal!'], 200);
         }
-
     }
 
     /**
@@ -164,14 +187,21 @@ class PenjualanController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Penjualan  $penjulan
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Penjualan $penjulan)
+
+    //Hapus Order
+    public function hapusOrder(Request $request)
     {
-        //
+        $id = $request->id;
+        $hapusItem = Penjualan::find($id);
+        $old_stock = StockObat::where('obat_id', $hapusItem->item_id)->first();
+        $new_stock = $hapusItem->qty + $old_stock->stock;
+        $old_stock->update(['stock' => $new_stock]);
+
+        if ($old_stock) {
+            $hapusOrder = $hapusItem->delete();
+            return response()->json(['message'=>'Data berhasil dihapus!'], 200);
+        } else {
+            return response()->json(['message'=>'Data gagal dihapus!']);
+        }
     }
 }

@@ -43,15 +43,15 @@
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="no_resep">No Resep</label>
-                                                <input type="text" class="form-control" id="no_resep" name="no_resep"
-                                                    placeholder="Isi Jika Ada">
+                                                <input type="text" disabled class="form-control" id="no_resep"
+                                                    name="no_resep" placeholder="Isi Jika Ada">
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="pengirim">Pengirim</label>
-                                                <input type="text" class="form-control" id="pengirim" name="pengirim"
-                                                    placeholder="Isi Jika Ada">
+                                                <input type="text" disabled class="form-control" id="pengirim"
+                                                    name="pengirim" placeholder="Isi Jika Ada">
                                             </div>
                                         </div>
                                     </div>
@@ -71,10 +71,12 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="obat_id">Nama Obat</label>
-                                            <select id="obat_id" class="form-control" name="obat_id">
-                                                <option>Pilih Obat</option>
+                                            <select id="obat_id" class="form-control select2" style="width: 100%;"
+                                                name="obat_id">
+                                                <option value="" selected>Pilih Obat</option>
                                                 @foreach ($obat as $item)
-                                                    <option value="{{ $item->obatId }}">{{ $item->namaObat }}</option>
+                                                    <option value="{{ $item->obatId }}">{{ $item->namaObat }}
+                                                    </option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -83,22 +85,22 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="stock">Stock Tersedia</label>
-                                            <input autocomplete="off" type="text" class="form-control" id="stock"
-                                                name="stock" onkeypress="return number(event)" value="0">
+                                            <input autocomplete="off" type="text" disabled class="form-control"
+                                                id="stock" name="stock" onkeypress="return number(event)" value="0">
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-group">
-                                            <label for="kwintansi">No Kwintansi</label>
-                                            <input autocomplete="off" type="text" class="form-control" id="kwintansi"
-                                                name="kwintansi" value="0">
+                                            <label for="kwitansi">No Kwintansi</label>
+                                            <input autocomplete="off" type="text" disabled class="form-control"
+                                                id="kwitansi" name="kwitansi" value="{{ $number }}">
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="tanggal">Tanggal</label>
-                                            <input autocomplete="off" type="date" class="form-control" id="tanggal"
-                                                name="tanggal" value="0" >
+                                            <input autocomplete="off" type="date" disabled class="form-control"
+                                                id="tanggal" name="tanggal" value="{{ $tanggal }}">
                                         </div>
                                     </div>
                                 </div>
@@ -114,27 +116,28 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="harga">Harga @satuan</label>
-                                            <input autocomplete="off" type="text" class="form-control" id="harga"
-                                                name="harga" onkeypress="return number(event)" value="0">
+                                            <input autocomplete="off" type="text" disabled class="form-control"
+                                                id="harga" name="harga" onkeypress="return number(event)" value="0">
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="diskon">Diskon</label>
-                                            <input autocomplete="off" type="text" class="form-control" id="diskon"
+                                            <input autocomplete="off" type="number" class="form-control" id="diskon"
                                                 name="diskon" onkeypress="return number(event)" value="0">
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="total_harga">Total Harga</label>
-                                            <input autocomplete="off" type="text" class="form-control" id="total_harga"
-                                                name="total_harga" value="0" onkeypress="return number(event)">
+                                            <input autocomplete="off" type="text" disabled class="form-control"
+                                                id="total_harga" name="total_harga" value="0"
+                                                onkeypress="return number(event)">
                                         </div>
                                     </div>
                                 </div>
                                 <button type="submit" id="btn-simpan" class="btn btn-success">Save</button>
-                                <button type="submit" id="btn-tambahObat" class="btn btn-primary">Tambah
+                                <button type="button" id="btn-tambahObat" class="btn btn-primary">Tambah
                                     Obat</button>
                             </div>
                             </form>
@@ -161,15 +164,46 @@
 @stack('js')
 <script src="{{ asset('AdminLTE/plugins/datatables/jquery.dataTables.js') }}"></script>
 
+<!-- Select2 -->
+<script src="{{ asset('AdminLTE/plugins/select2/js/select2.full.min.js') }}"></script>
+
 <script>
     $(document).ready(function() {
+        $('.select2').select2()
 
-        loadData()
-
-        //Reset Form Input
-        // $('#btn-tambah').click(function() {
-        //     $('#form')[0].reset()
-        // });
+        //dataTable
+        $('#datatable').DataTable({
+            serverSide: true,
+            processing: true,
+            ajax: {
+                url: "{{ route('dataTable') }}",
+                data: {
+                    id: $('#kwitansi').val()
+                }
+            },
+            columns: [{
+                    data: 'nama',
+                    name: 'nama'
+                },
+                {
+                    data: 'qty',
+                    name: 'qty'
+                },
+                {
+                    data: 'harga',
+                    name: 'harga'
+                },
+                {
+                    data: 'sub_total',
+                    name: 'sub_total'
+                },
+                {
+                    data: 'aksi',
+                    name: 'aksi',
+                    orderable: false,
+                },
+            ]
+        })
 
         //Get data stok obat
         $('#obat_id').on('change', function() {
@@ -200,11 +234,14 @@
         })
 
         //Live Update inputan Stock
-
-
+        $('#qty').on('change', function() {
+            let qty = parseInt($('#qty').val())
+            let stock = parseInt($('#stock').val())
+            $('#stock').val(stock - qty)
+        })
 
         //Function Store
-        $('#form').on('submit', function() {
+        $('#form').on('submit', function(event) {
             event.preventDefault();
             $.ajax({
                 url: $(this).attr('action'),
@@ -215,8 +252,10 @@
                 contentType: false,
                 success: function(res) {
                     console.log(res)
-                    $('#form')[0].reset()
-                    $('#btn-tutup').click()
+                    $('#btn-save').hide()
+                    $('#obat_id').prop('disabled', true)
+                    $('#qty').attr('disabled', true)
+                    $('#diskon').attr('disabled', true)
                     $('#datatable').DataTable().ajax.reload()
                     Swal.fire({
                         icon: 'success',
@@ -234,43 +273,50 @@
                 }
             })
         })
+
+        //Hapus
+        $(document).on('click', '.hapus', function() {
+            let id = $(this).attr('id')
+            $.ajax({
+                url: "{{ route('hapusOrder') }}",
+                type: "POST",
+                data: {
+                    id: id,
+                    _token: "{{ csrf_token() }}"
+                },
+                success: function(res) {
+                    console.log(res)
+                    $('#datatable').DataTable().ajax.reload()
+                    Swal.fire({
+                        icon: 'success',
+                        title: res.message,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                },
+                error: function(xhr) {
+                    console.log(xhr)
+                    Swal.fire({
+                        icon: 'error',
+                        title: xhr.responseJSON.message,
+                    })
+                }
+            })
+        })
+
+        //tambah obat
+        $('#btn-tambahObat').click(function() {
+            $('#btn-save').show()
+            $('#qty').attr('disabled', false)
+            $('#qty').val(null)
+            $('#obat_id').prop('disabled', false)
+            $('#diskon').prop('disabled', false)
+            $('#diskon').val(null)
+        })
+
     })
 
-    //Get datatables
-    function loadData() {
-        $('#datatable').DataTable({
-            serverSide: true,
-            processing: true,
-            ajax: {
-                url: "{{ route('penjualan.index') }}",
-                data: {
-                    id : $('#kwintansi').val()
-                }
-            },
-            columns: [{
-                    data: 'nama_obat',
-                    name: 'nama_obat'
-                },
-                {
-                    data: 'qty',
-                    name: 'qty'
-                },
-                {
-                    data: 'harga',
-                    name: 'harga'
-                },
-                {
-                    data: 'subTotal',
-                    name: 'subTotal'
-                },
-                {
-                    data: 'aksi',
-                    name: 'aksi',
-                    orderable: false,
-                },
-            ]
-        })
-    }
+
 
     //Validasi Inputan Harus Number
     function number(evt) {

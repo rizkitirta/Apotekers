@@ -18,8 +18,8 @@ class CreatePasiensTable extends Migration
             $table->string('nama_pasien');
             $table->string('telp');
             $table->text('alamat');
-            $table->string('no_resep');
-            $table->string('pengirim');
+            $table->string('no_resep')->nullable();
+            $table->string('pengirim')->nullable();
             $table->timestamps();
         });
     }

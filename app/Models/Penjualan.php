@@ -14,13 +14,13 @@ class Penjualan extends Model
 
     public static function join()
     {
-        $data = DB::table('penjulans')
-            ->join('obats', 'penjulans.item_id', 'obats.id')
-            ->join('users', 'penjulans.user_id', 'users.id')
-            ->join('pasiens', 'penjulans.consumer_id', 'pasiens.id')
-            ->join('stock_obats', 'penjulans.item_id', 'stock_obats.obat_id')
+        $data = DB::table('penjualans')
+            ->join('obats', 'penjualans.item_id', 'obats.id')
+            ->join('users', 'penjualans.user_id', 'users.id')
+            ->join('pasiens', 'penjualans.consumer_id', 'pasiens.id')
+            ->join('stock_obats', 'penjualans.item_id', 'stock_obats.obat_id')
             ->select(
-                'penjulans.*',
+                'penjualans.*',
                 'obats.nama as nama_obat',
                 'users.name as user_name',
                 'pasiens.nama_pasien as consumer',

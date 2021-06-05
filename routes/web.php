@@ -59,13 +59,13 @@ Route::group(['middleware' => ['role:owner']], function () {
 
     //Route Penjualan Barang
     Route::get('penjualan/index', [PenjualanController::class, 'index'])->name('penjualan.index');
+    Route::get('penjualan/dataTable', [PenjualanController::class, 'dataTable'])->name('dataTable');
     Route::post('penjualan/getObat', [PenjualanController::class, 'getObat'])->name('penjualan.getObat');
+    Route::post('penjualan/hapusOrder', [PenjualanController::class, 'hapusOrder'])->name('hapusOrder');
     Route::post('penjualan/store', [PenjualanController::class, 'store'])->name('penjualan.store');
     Route::post('penjualan/edit', [PenjualanController::class, 'edit'])->name('penjualan.edit');
     Route::post('penjualan/update', [PenjualanController::class, 'update'])->name('penjualan.update');
     Route::post('penjualan/delete', [PenjualanController::class, 'hapus'])->name('penjualan.hapus');
-
-
 });
 
 require __DIR__ . '/auth.php';
